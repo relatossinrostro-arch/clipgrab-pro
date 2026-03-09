@@ -1,4 +1,4 @@
-import { Header } from "@/components/Header";
+import { Header } from "../../components/Header";
 import { Download, Chrome, Shield, Zap, CheckCircle2, ArrowRight } from "lucide-react";
 import { Metadata } from "next";
 

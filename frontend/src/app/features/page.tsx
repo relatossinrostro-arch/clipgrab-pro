@@ -1,7 +1,7 @@
-import { Header } from "@/components/Header";
-import { Features } from "@/components/Features";
-import { SeoSitemap } from "@/components/SeoSitemap";
-import { DownloadTool } from "@/components/DownloadTool";
+import { Header } from "../../components/Header";
+import { Features } from "../../components/Features";
+import { SeoSitemap } from "../../components/SeoSitemap";
+import { DownloadTool } from "../../components/DownloadTool";
 
 export default function FeaturesPage() {
     return (

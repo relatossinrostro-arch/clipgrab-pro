@@ -1,12 +1,12 @@
-import { Header } from "@/components/Header";
-import { Hero } from "@/components/Hero";
-import { PlatformsGrid } from "@/components/PlatformsGrid";
-import { Features } from "@/components/Features";
-import { HowItWorks } from "@/components/HowItWorks";
-import { Pricing } from "@/components/Pricing";
-import { FAQ } from "@/components/FAQ";
-import { DownloadHistory } from "@/components/DownloadHistory";
-import { SeoSitemap } from "@/components/SeoSitemap";
+import { Header } from "../components/Header";
+import { Hero } from "../components/Hero";
+import { PlatformsGrid } from "../components/PlatformsGrid";
+import { Features } from "../components/Features";
+import { HowItWorks } from "../components/HowItWorks";
+import { Pricing } from "../components/Pricing";
+import { FAQ } from "../components/FAQ";
+import { DownloadHistory } from "../components/DownloadHistory";
+import { SeoSitemap } from "../components/SeoSitemap";
 import { Download } from "lucide-react";
 
 export default function Home() {

@@ -1,11 +1,11 @@
 import { Metadata } from "next";
 import { allSeoPages } from "../../../lib/seo-data";
-import { Header } from "@/components/Header";
-import { DownloadTool } from "@/components/DownloadTool";
-import { Features } from "@/components/Features";
-import { FAQ } from "@/components/FAQ";
-import { HowItWorks } from "@/components/HowItWorks";
-import { PlatformsGrid } from "@/components/PlatformsGrid";
+import { Header } from "../../../components/Header";
+import { DownloadTool } from "../../../components/DownloadTool";
+import { Features } from "../../../components/Features";
+import { FAQ } from "../../../components/FAQ";
+import { HowItWorks } from "../../../components/HowItWorks";
+import { PlatformsGrid } from "../../../components/PlatformsGrid";
 import { Download, CheckCircle2, Star } from "lucide-react";
 import { notFound } from "next/navigation";
 

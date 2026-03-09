@@ -15,9 +15,9 @@ import {
     ExternalLink,
     AlertCircle
 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "../lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
-import { API_BASE, analyzeVideo } from "@/lib/api";
+import { API_BASE, analyzeVideo } from "../lib/api";
 
 // TikTok SVG Icon for Branding
 const TikTokIcon = () => (

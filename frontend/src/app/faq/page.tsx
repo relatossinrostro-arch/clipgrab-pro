@@ -1,6 +1,6 @@
-import { Header } from "@/components/Header";
-import { FAQ } from "@/components/FAQ";
-import { SeoSitemap } from "@/components/SeoSitemap";
+import { Header } from "../../components/Header";
+import { FAQ } from "../../components/FAQ";
+import { SeoSitemap } from "../../components/SeoSitemap";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 
