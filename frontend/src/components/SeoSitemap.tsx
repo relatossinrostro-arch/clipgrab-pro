@@ -1,6 +1,6 @@
 "use client";
 
-import { allSeoPages } from "@/lib/seo-data";
+import { allSeoPages } from "../lib/seo-data";
 
 export function SeoSitemap() {
     return (

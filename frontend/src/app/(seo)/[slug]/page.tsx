@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { allSeoPages } from "@/lib/seo-data";
+import { allSeoPages } from "../../../lib/seo-data";
 import { Header } from "@/components/Header";
 import { DownloadTool } from "@/components/DownloadTool";
 import { Features } from "@/components/Features";
