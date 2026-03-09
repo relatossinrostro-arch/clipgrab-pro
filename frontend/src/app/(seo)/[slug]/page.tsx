@@ -1,17 +1,17 @@
 import { Metadata } from "next";
-import { generateSeoSlugs, getSeoContent } from "@/lib/seo-data";
+import { allSeoPages } from "@/lib/seo-data";
 import { Header } from "@/components/Header";
 import { DownloadTool } from "@/components/DownloadTool";
 import { Features } from "@/components/Features";
 import { FAQ } from "@/components/FAQ";
 import { HowItWorks } from "@/components/HowItWorks";
 import { PlatformsGrid } from "@/components/PlatformsGrid";
-import { Download, CheckCircle2, Star, Zap, Shield } from "lucide-react";
+import { Download, CheckCircle2, Star } from "lucide-react";
+import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
-    const slugs = generateSeoSlugs();
-    return slugs.map((slug) => ({
-        slug,
+    return allSeoPages.map((page) => ({
+        slug: page.slug,
     }));
 }
 
@@ -20,15 +20,53 @@ export async function generateMetadata({
 }: {
     params: { slug: string };
 }): Promise<Metadata> {
-    const content = getSeoContent(params.slug);
+    const pageData = allSeoPages.find(p => p.slug === params.slug);
+    if (!pageData) {
+        return {
+            title: "Not Found",
+            description: "Page not found"
+        };
+    }
     return {
-        title: content.title,
-        description: content.description,
+        title: pageData.title,
+        description: pageData.description,
     };
 }
 
 export default function SeoLandingPage({ params }: { params: { slug: string } }) {
-    const content = getSeoContent(params.slug);
+    const pageData = allSeoPages.find(p => p.slug === params.slug);
+
+    if (!pageData) {
+        return notFound();
+    }
+
+    // Determine platform loosely from slug for UI display
+    const platformMatch = pageData.slug.split("-")[0];
+    const displayPlatform = ["youtube", "tiktok", "instagram", "facebook", "twitter"].includes(platformMatch)
+        ? platformMatch.charAt(0).toUpperCase() + platformMatch.slice(1)
+        : "Video";
+
+    const instructions = [
+        `Copy the ${displayPlatform} video URL you want to download.`,
+        `Paste the link into the ClipGrab Pro analysis box.`,
+        `Click "Analyze" and wait for the conversion to complete.`,
+        `Select your preferred quality and hit Download.`,
+    ];
+
+    const benefits = [
+        {
+            title: "High Speed",
+            desc: "Our servers process downloads in seconds.",
+        },
+        {
+            title: "Top Quality",
+            desc: "Support for 4K, 1080p, and HD formats.",
+        },
+        {
+            title: "Safe & Private",
+            desc: "We don't track your downloads or history.",
+        },
+    ];
 
     // Structured Data (JSON-LD)
     const jsonLd = {
@@ -51,6 +89,8 @@ export default function SeoLandingPage({ params }: { params: { slug: string } })
 
     return (
         <main className="min-h-screen bg-background-primary overflow-x-hidden">
+            <title>{pageData.title}</title>
+            <meta name="description" content={pageData.description} />
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -63,14 +103,14 @@ export default function SeoLandingPage({ params }: { params: { slug: string } })
 
                 <div className="max-w-5xl mx-auto relative z-20 space-y-10">
                     <div className="inline-block px-4 py-1.5 rounded-full glass-morphism border border-white/5 text-[10px] uppercase font-black tracking-[0.3em] text-primary">
-                        {content.platform} Specialist Downloader
+                        {displayPlatform} Specialist Downloader
                     </div>
                     <h1 className="text-5xl md:text-7xl font-black leading-tight tracking-tighter">
-                        {content.h1} <br />
+                        {pageData.title} <br />
                         <span className="gradient-text">Safe & Fast Online.</span>
                     </h1>
                     <p className="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto font-medium">
-                        {content.description}
+                        {pageData.description}
                     </p>
 
                     <div className="relative pt-10">
@@ -84,15 +124,15 @@ export default function SeoLandingPage({ params }: { params: { slug: string } })
                 <div className="grid md:grid-cols-2 gap-16 items-center">
                     <div className="space-y-8">
                         <h2 className="text-4xl font-black tracking-tight">
-                            Best {content.platform} Downloader
+                            Best {displayPlatform} Downloader
                         </h2>
                         <p className="text-text-secondary leading-relaxed text-lg">
-                            ClipGrab Pro is optimized specifically for {content.platform} users.
-                            Whether you're looking for {content.feature || "high-quality"} downloads or
+                            ClipGrab Pro is optimized specifically for {displayPlatform} users.
+                            Whether you're looking for high-quality downloads or
                             simple video saves, our tool delivers unparalleled performance.
                         </p>
                         <div className="space-y-4">
-                            {content.instructions.map((step, i) => (
+                            {instructions.map((step, i) => (
                                 <div key={i} className="flex items-center gap-4 text-sm font-bold text-text-secondary">
                                     <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-xs">
                                         {i + 1}
@@ -108,7 +148,7 @@ export default function SeoLandingPage({ params }: { params: { slug: string } })
                             <span className="text-xl font-bold">Trusted by millions</span>
                         </div>
                         <div className="space-y-6">
-                            {content.benefits.map((benefit, i) => (
+                            {benefits.map((benefit, i) => (
                                 <div key={i} className="flex items-start gap-4">
                                     <div className="mt-1">
                                         <CheckCircle2 className="text-green-500" size={20} />
@@ -134,13 +174,13 @@ export default function SeoLandingPage({ params }: { params: { slug: string } })
                 <div className="space-y-10">
                     <h3 className="text-2xl font-black">See Also</h3>
                     <div className="flex flex-wrap gap-4">
-                        {generateSeoSlugs().slice(0, 20).map((slug) => (
+                        {allSeoPages.slice(0, 20).map((page) => (
                             <a
-                                key={slug}
-                                href={`/${slug}`}
+                                key={page.slug}
+                                href={`/${page.slug}`}
                                 className="glass-morphism px-6 py-3 rounded-2xl text-xs font-bold text-text-secondary hover:text-primary hover:border-primary/30 transition-all uppercase tracking-widest"
                             >
-                                {slug.replace(/-/g, " ")}
+                                {page.title}
                             </a>
                         ))}
                     </div>
@@ -158,10 +198,9 @@ export default function SeoLandingPage({ params }: { params: { slug: string } })
                             <span className="text-xl font-black gradient-text tracking-tight">ClipGrab Pro</span>
                         </div>
                         <p className="text-text-secondary text-sm leading-relaxed font-medium">
-                            Professional video downloader for {content.platform} and more.
+                            Professional video downloader for {displayPlatform} and more.
                         </p>
                     </div>
-                    {/* ... other footer parts would be similar ... */}
                 </div>
             </footer>
         </main>
